@@ -9,7 +9,7 @@ import { DataService } from '../data.service';
 export class TodoComponent implements OnInit {
   @ViewChild('closeModal') closeModal: ElementRef;
   editValue: string = '';
-  todoArray: string[] = this.ds.getData();
+  todoArray: string[] = this.ds.getData() || [];
   todo: any;
   todoForm: any;
   editOldValue: any;
