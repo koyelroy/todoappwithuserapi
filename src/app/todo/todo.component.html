@@ -1,0 +1,67 @@
+<div class="container">
+    <form #todoForm="ngForm" (submit)="todoSubmit(todoForm.value); todoForm.resetForm();" autocomplete="off">
+        <div class="form-group">
+            <h1 class="text-center ">Todo App</h1>
+            <div class="input-group mb-3">
+                <input type="text" #todo class="form-control" placeholder="Add Todo" aria-label="Add Todo"
+                    aria-describedby="button-addon2" name="todo" ngModel>
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                    (click)="addTodo(todo.value)">Create Todo</button>
+            </div>
+        </div>
+        <div class="data">
+            <!-- <ul class="list-unstyled">
+                <li *ngFor="let todo of todoArray">{{todo}} <span (click)="deleteItem(todo)" class="fa fa-trash"></span>
+                </li>
+            </ul> -->
+            <table class="table table-success table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">ToDo Name</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <!-- Data exist -->
+                <tbody *ngIf="todoArray.length> 0">
+                    <tr *ngFor="let todo of todoArray; let i = index;">
+                        <th scope="row">{{i + 1}}</th>
+                        <td>
+                            <span>{{todo}}</span>
+                        </td>
+                        <td>
+                            <span (click)="editItem(todo)" class="fa fa-pencil" data-bs-toggle="modal" data-bs-target="#editModal" title="Edit Item"></span>
+                            <span (click)="deleteItem(todo)" class="fa fa-trash ms-2" title="Delete Item"></span>
+                        </td>
+                    </tr>
+                </tbody>
+                <!-- No data present -->
+                <tbody *ngIf="todoArray.length === 0">
+                    <tr>
+                        <td colspan="3">No Todo to show</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Todo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" [(ngModel)]="editValue" (keyup.enter)="saveEditChanges()" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #closeModal>Close</button>
+                <button type="button" class="btn btn-primary" [disabled]="editValue === ''" (click)="saveEditChanges()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
